@@ -141,7 +141,6 @@ public class HibernateTrackedEntityInstanceStore
     }
 
     @Override
-    @SuppressWarnings( "unchecked" )
     public List<Long> getTrackedEntityInstanceIds( TrackedEntityInstanceQueryParams params )
     {
         String hql = buildTrackedEntityInstanceHql( params, true );
@@ -152,7 +151,7 @@ public class HibernateTrackedEntityInstanceStore
             hql = hql.replaceFirst( "select tei from", "select distinct tei from" );
         }
 
-        Query<TrackedEntityInstance> query = getQuery( hql );
+        Query query = getSession().createQuery( hql );
 
         if ( params.isPaging() )
         {
